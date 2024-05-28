@@ -17,3 +17,14 @@ variable ami_id{
     type = string
     default = "ami-090252cbe067a9e58"
 }
+
+variable "instance_names" {
+    type = list(string)
+    default = ["DataBase","Backend","Frontend"]
+}
+
+variable "common_tags" {
+    default = {
+        terraform = true
+    }
+}

@@ -1,7 +1,8 @@
 resource "aws_instance" "sample" {
   ami = var.ami_id
+  count = length(var.instance_names)
   vpc_security_group_ids = [aws_security_group.allow_all.id]
-  instance_type = var.instance_type
+  instance_type = var.instance_names[count.index]
 
   tags = {
     Name= "HelloTerraform"
