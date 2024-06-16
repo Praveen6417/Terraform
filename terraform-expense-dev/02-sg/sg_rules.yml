@@ -1,0 +1,52 @@
+- name: Security group rules
+  sg:
+    - expense-dev-db
+    - expense-dev-backend
+    - expense-dev-frontend
+    - expense-dev-bastion
+    - expense-dev-ansible
+  db:
+    - name: db_backend
+      desc: db accepting traffic/connections from backend
+      port: 3306
+      source: backend
+    - name: db_bastion
+      desc: db accepting traffic/connections from bastion
+      port: 3306
+      source: bastion
+  backend:
+    - name: backend_frontend
+      desc: backend accepting traffic/connections from frontend
+      port: 8080
+      source: frontend
+    - name: backend_bastion
+      desc: backend accepting traffic/connections from bastion
+      port: 22
+      source: bastion
+    - name: backend_ansible
+      desc: backend accepting traffic/connections from ansible
+      port: 22
+      source: ansible
+  frontend:
+    - name: frontend_internet
+      desc: frontend accepting traffic/connections from internet
+      port: 80
+      source: internet
+    - name: frontend_bastion
+      desc: frontend accepting traffic/connections from bastion
+      port: 22
+      source: bastion
+    - name: frontend_ansible
+      desc: frontend accepting traffic/connections from ansible
+      port: 22
+      source: ansible
+  bastion:
+    - name: bastion_internet
+      desc: bastion accepting traffic/connections from internet
+      port: 22
+      source: internet
+  ansible:
+    - name: ansible_internet
+      desc: ansible accepting traffic/connections from internet
+      port: 22
+      source: internet
