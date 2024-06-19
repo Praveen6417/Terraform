@@ -53,8 +53,14 @@ resource "aws_subnet" "expense-private-db" {
     }
 }
 
-resource "aws_db_subnet_group" "name" {
+resource "aws_db_subnet_group" "db_group" {
+  name = "db-subnet-group"
+  description = "Subnet group for private DB subnets"
   subnet_ids = aws_subnet.expense-private-db[*].id
+
+   tags = {
+    Name = "private-db-subnet-group"
+  }
 }
 
 
