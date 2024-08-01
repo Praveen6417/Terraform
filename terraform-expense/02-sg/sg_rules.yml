@@ -1,0 +1,84 @@
+- name: Security group rules
+  sg:
+    - expense-dev-db
+    - expense-dev-app-alb
+    - expense-dev-web-alb
+    - expense-dev-backend
+    - expense-dev-frontend
+    - expense-dev-bastion
+    - expense-dev-vpn
+  db:
+    - name: db_backend
+      desc: db accepting traffic/connections from backend
+      port: 3306
+      source: backend
+    - name: db_bastion
+      desc: db accepting traffic/connections from bastion
+      port: 3306
+      source: bastion
+    - name: db_vpn
+      desc: db accepting traffic/connections from vpn
+      port: 3306
+      source: vpn
+  backend:
+    - name: backend_app-alb
+      desc: backend accepting traffic/connections from app-alb
+      port: 8080
+      source: app-alb
+    - name: backend_bastion
+      desc: backend accepting traffic/connections from bastion
+      port: 22
+      source: bastion
+    - name: backend_vpn-ssh
+      desc: backend accepting traffic/connections from vpn-ssh
+      port: 22
+      source: vpn-ssh
+    - name: backend_vpn-http
+      desc: backend accepting traffic/connections from vpn-http
+      port: 8080
+      source: vpn-http
+  frontend:
+    - name: frontend_vpn
+      desc: frontend accepting traffic/connections from vpn
+      port: 22
+      source: vpn
+    - name: frontend_bastion
+      desc: frontend accepting traffic/connections from bastion
+      port: 22
+      source: bastion
+    - name: frontend_web-alb
+      desc: frontend accepting traffic/connections from web-alb
+      port: 80
+      source: web-alb
+  bastion:
+    - name: bastion_internet
+      desc: bastion accepting traffic/connections from internet
+      port: 22
+      source: internet
+  vpn:
+    - name: vpn_internet
+      desc: vpn accepting traffic/connections from internet
+      port: 943, 443, 22, 1194
+      source: internet
+  web-alb:
+    - name: web-alb_internet-http
+      desc: web-alb accepting traffic/connections from internet
+      port: 80
+      source: internet
+    - name: web-alb_internet-https
+      desc: web-alb accepting traffic/connections from internet
+      port: 443
+      source: internet
+  app-alb:
+    - name: app-alb_frontend
+      desc: app-alb accepting traffic/connections from frontend
+      port: 80
+      source: frontend
+    - name: app-alb_vpn
+      desc: app-alb accepting traffic/connections from vpn
+      port: 80
+      source: vpn
+    - name: app-alb_bastion
+      desc: app-alb accepting traffic/connections from bastion
+      port: 80
+      source: bastion
