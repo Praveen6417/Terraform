@@ -3,7 +3,7 @@
 # }
 
 output "vpc" {
-  value = module.aws_vpc.id 
+  value = module.aws_vpc.vpc
 }
 
 # output "length_public_subnets" {
