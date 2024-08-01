@@ -7,5 +7,5 @@ resource "aws_ssm_parameter" "vpc_id" {
 resource "aws_ssm_parameter" "public_subnets" {
   name = "/${var.project_name}/${var.environment}/public_subnets"
   type = "StringList"
-  value = join(module.aws_vpc.public_subnet_ids)
+  value = join(",", module.aws_vpc.public_subnet_ids)
 }
