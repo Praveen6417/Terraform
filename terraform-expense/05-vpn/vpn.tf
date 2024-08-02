@@ -1,6 +1,6 @@
 module "vpn" {
   source  = "terraform-aws-modules/ec2-instance/aws"
-  key_name = aws_key_pair.public_key.key_name
+  key_name = aws_key_pair.vpn.key_name
   name = "${var.project_name}-${var.environment}-vpn"
 
   instance_type          = "t2.micro"
@@ -16,7 +16,10 @@ module "vpn" {
   )
 }
 
-resource "aws_key_pair" "public_key" {
-  key_name = "vpn"
-  public_key = file("pub.txt")
+resource "aws_key_pair" "vpn" {
+  key_name   = "vpn"
+  # you can paste the public key directly like this
+  #public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6ONJth+DzeXbU3oGATxjVmoRjPepdl7sBuPzzQT2Nc sivak@BOOK-I6CR3LQ85Q"
+  public_key = file("~/.ssh/openvpn.pub")
+  # ~ means windows home directory
 }
