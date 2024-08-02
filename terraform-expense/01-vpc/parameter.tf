@@ -21,3 +21,9 @@ resource "aws_ssm_parameter" "private_db_subnets" {
   type = "StringList"
   value = join(",", module.aws_vpc.private_db_subnet_ids)
 }
+
+resource "aws_ssm_parameter" "private_db_subnet_group_name" {
+  name = "/${var.project_name}/${var.environment}/private_db_subnet_group_name"
+  type = "String"
+  value = module.aws_vpc.private_db_subnet_group_name
+}
