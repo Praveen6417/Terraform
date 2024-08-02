@@ -25,6 +25,7 @@ resource "aws_subnet" "expense-public" {
     vpc_id = aws_vpc.expense.id
     availability_zone = local.availability_zone[count.index]
     cidr_block = var.public_subnet[count.index]
+    map_public_ip_on_launch = true
 
     tags = {
       Name = "expense-public-frontend"
