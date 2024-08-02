@@ -3,5 +3,5 @@ data "aws_ssm_parameter" "db_sg_id" {
 }
 
 data "aws_ssm_parameter" "private_db_subnet_group_name" {
-  name = "/${var.project_name}/${var.environment}/private_db_subnets"
+  name = "/${var.project_name}/${var.environment}/private_db_subnet_group_name"
 }
