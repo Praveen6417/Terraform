@@ -5,7 +5,7 @@ module "backend" {
   instance_type          = "t2.micro"
   vpc_security_group_ids = [ data.aws_ssm_parameter.backend_sg_id.value ]
   ami = data.aws_ami.ami_id.id
-  subnet_id              = local.private_subnet_ids.value
+  subnet_id              = local.private_subnet_ids
 
   tags = merge(
     var.common_tags,
