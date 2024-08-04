@@ -28,6 +28,11 @@ resource "null_resource" "backend" {
     host = module.backend.private_ip
   }
 
+  provisioner "local-exec" {
+    command = "echo 'Hello, Terraform!'"
+  }
+
+
   # provisioner "file" {
   #   source = "backend.sh"
   #   destination = "/tmp/backend.sh"
