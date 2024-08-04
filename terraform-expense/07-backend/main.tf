@@ -28,8 +28,8 @@ resource "null_resource" "backend" {
     host = module.backend.private_ip
   }
 
-  provisioner "local-exec" {
-    command = "echo 'Hello, Terraform!'"
+   provisioner "local-exec" {
+    command = "echo 'Connection to ${module.backend.private_ip} was successful!'"
   }
 
 
