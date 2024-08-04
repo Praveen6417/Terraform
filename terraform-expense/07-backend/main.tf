@@ -32,6 +32,13 @@ resource "null_resource" "backend" {
     source = "backend.sh"
     destination = "/tmp/backend.sh"
   }
+
+  provisioner "remote-exec" {
+        inline = [
+            "chmod +x /tmp/${var.common_tags.component}.sh",
+            "sudo sh /tmp/${var.common_tags.component}.sh ${var.common_tags.component} ${var.environment}"
+        ]
+    } 
 }
 
 resource "aws_ec2_instance_state" "backend" {
@@ -99,6 +106,7 @@ resource "aws_lb_target_group" "backend" {
   health_check {
     protocol = "HTTP"
     path = "/health"
+    port = 8080
   }
 }
 
@@ -131,7 +139,7 @@ resource "aws_autoscaling_group" "backend" {
 
   tag {
     key                 = "Name"
-    value               = "${var.project_name}-${var.environment}-${var.common_tags.Component}"
+    value               = "${var.project_name}-${var.environment}-${var.common_tags.component}"
     propagate_at_launch = true
   }
 
@@ -159,18 +167,18 @@ resource "aws_autoscaling_policy" "cpu_target_tracking" {
   }
 }
 
-resource "aws_lb_listener_rule" "backend" {
-  listener_arn = data.aws_ssm_parameter.app-alb-aws_lb_listener.value
-  priority     = 100 # less number will be first validated
+# resource "aws_lb_listener_rule" "backend" {
+#   listener_arn = data.aws_ssm_parameter.app-alb-aws_lb_listener.value
+#   priority     = 100 # less number will be first validated
 
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.backend.arn
-  }
+#   action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.backend.arn
+#   }
 
-  condition {
-    host_header {
-      values = [ ]
-    }
-  }
-}
+#   condition {
+#     host_header {
+#       values = [ ]
+#     }
+#   }
+# }
