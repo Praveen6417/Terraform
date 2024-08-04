@@ -28,14 +28,14 @@ resource "null_resource" "backend" {
     host = module.backend.private_ip
   }
 
-   provisioner "local-exec" {
+  provisioner "local-exec" {
     command = "echo 'Connection to ${module.backend.private_ip} was successful!'"
   }
 
   provisioner "file" {
-        source      = "${var.common_tags.component}.sh"
-        destination = "/tmp/${var.common_tags.component}.sh"
-    }
+    source      = "${var.common_tags.component}.sh"
+    destination = "sudo /tmp/${var.common_tags.component}.sh"
+  }
 
   provisioner "remote-exec" {
         inline = [
