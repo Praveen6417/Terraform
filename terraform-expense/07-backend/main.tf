@@ -32,6 +32,10 @@ resource "null_resource" "backend" {
     command = "echo 'Connection to ${module.backend.private_ip} was successful!'"
   }
 
+  provisioner "remote-exec" {
+    inline = [ "sudo touch /tmp/backend.sh " ]
+  }
+
   provisioner "file" {
     source      = "Backend.sh"
     destination = "/tmp/backend.sh"
