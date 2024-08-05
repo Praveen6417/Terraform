@@ -25,6 +25,7 @@ resource "null_resource" "backend" {
     type     = "ssh"
     user     = "ec2-user"
     password = "DevOps321"
+    private_key = file("~/.ssh/backend.pub")
     host     = module.backend.private_ip
   }
 
