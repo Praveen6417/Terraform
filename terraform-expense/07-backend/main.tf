@@ -33,8 +33,14 @@ resource "null_resource" "backend" {
   }
 
   provisioner "remote-exec" {
-    inline = [ "sudo touch /tmp/backend.sh " ]
+    inline = [
+      "echo 'Connection successful!'"
+    ]
   }
+
+  # provisioner "remote-exec" {
+  #   inline = [ "sudo touch /tmp/backend.sh " ]
+  # }
 
   provisioner "file" {
     source      = "Backend.sh"
