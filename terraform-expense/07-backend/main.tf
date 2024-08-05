@@ -20,14 +20,6 @@ resource "null_resource" "backend" {
   triggers = {
     instance_id = module.backend.id
   }
-  
-  connection {
-    type     = "ssh"
-    user     = "ec2-user"
-    password = "DevOps321"
-    private_key = file("~/.ssh/backend")
-    host     = module.backend.private_ip
-  }
 
   provisioner "remote-exec" {
     inline = [
@@ -47,6 +39,16 @@ resource "null_resource" "backend" {
     source      = "Backend.sh"
     destination = "/tmp/backend.sh"
   }
+  
+  connection {
+    type     = "ssh"
+    user     = "ec2-user"
+    password = "DevOps321"
+    private_key = file("~/.ssh/backend")
+    host     = module.backend.private_ip
+  }
+
+  
 
   provisioner "remote-exec" {
     inline = [
