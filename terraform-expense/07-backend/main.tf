@@ -15,6 +15,14 @@ module "backend" {
   )
 }
 
+resource "aws_key_pair" "backend" {
+  key_name   = "vpn"
+  # you can paste the public key directly like this
+  #public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL6ONJth+DzeXbU3oGATxjVmoRjPepdl7sBuPzzQT2Nc sivak@BOOK-I6CR3LQ85Q"
+  public_key = file("~/.ssh/backend.pub")
+  # ~ means windows home directory
+}
+
 resource "null_resource" "backend" {
 
   triggers = {
@@ -25,7 +33,7 @@ resource "null_resource" "backend" {
     type     = "ssh"
     user     = "ec2-user"
     password = "DevOps321"
-    private_key = file("~/.ssh/backend.pub")
+    private_key = file("~/.ssh/backend")
     host     = module.backend.private_ip
   }
 
