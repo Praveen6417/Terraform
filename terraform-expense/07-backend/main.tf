@@ -2,7 +2,7 @@ module "backend" {
   source  = "terraform-aws-modules/ec2-instance/aws"
   name = "${var.project_name}-${var.environment}-backend"
 
-  instance_type          = "t2.micro"
+  instance_type          = "t3.micro"
   vpc_security_group_ids = [ data.aws_ssm_parameter.backend_sg_id.value ]
   ami = data.aws_ami.ami_id.id
   subnet_id              = local.private_subnet_ids
