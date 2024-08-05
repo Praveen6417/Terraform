@@ -33,8 +33,8 @@ resource "null_resource" "backend" {
   }
 
   provisioner "file" {
-    source      = "${var.common_tags.component}.sh"
-    destination = "sudo /tmp/${var.common_tags.component}.sh"
+    source = "Backend.sh"
+    destination = "/tmp/backend.sh"
   }
 
   provisioner "remote-exec" {
