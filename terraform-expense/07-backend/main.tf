@@ -15,46 +15,46 @@ module "backend" {
   )
 }
 
-# resource "null_resource" "backend" {
+resource "null_resource" "backend" {
 
-#   triggers = {
-#     instance_id = module.backend.id
-#   }
+  triggers = {
+    instance_id = module.backend.id
+  }
   
-#   connection {
-#     type     = "ssh"
-#     user     = "ec2-user"
-#     password = "DevOps321"
-#     private_key = file("~/.ssh/backend")
-#     host     = module.backend.private_ip
-#   }
+  connection {
+    type     = "ssh"
+    user     = "ec2-user"
+    password = "DevOps321"
+    private_key = file("~/.ssh/backend")
+    host     = module.backend.private_ip
+  }
 
-#   provisioner "remote-exec" {
-#     inline = [
-#       "echo 'Hello from Terraform!' > /tmp/test.txt"
-#     ]
-#   }
+  provisioner "remote-exec" {
+    inline = [
+      "echo 'Hello from Terraform!' > /tmp/test.txt"
+    ]
+  }
 
-#   provisioner "local-exec" {
-#     command = "echo 'Connection to ${module.backend.private_ip} was successful!'"
-#   }
+  provisioner "local-exec" {
+    command = "echo 'Connection to ${module.backend.private_ip} was successful!'"
+  }
 
-#   # provisioner "remote-exec" {
-#   #   inline = [ "sudo touch /tmp/backend.sh " ]
-#   # }
+  provisioner "remote-exec" {
+    inline = [ "sudo touch /tmp/backend.sh " ]
+  }
 
-#   provisioner "file" {
-#     source      = "Backend.sh"
-#     destination = "/tmp/backend.sh"
-#   }
+  provisioner "file" {
+    source      = "Backend.sh"
+    destination = "/tmp/backend.sh"
+  }
 
-#   provisioner "remote-exec" {
-#     inline = [
-#       "chmod +x /tmp/backend.sh",
-#       "sudo sh /tmp/backend.sh ${var.common_tags.component} ${var.environment}"
-#     ]
-#   } 
-# }
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/backend.sh",
+      "sudo sh /tmp/backend.sh ${var.common_tags.component} ${var.environment}"
+    ]
+  } 
+}
 
 
 # resource "aws_ec2_instance_state" "backend" {
