@@ -17,9 +17,9 @@ module "backend" {
 
 resource "null_resource" "backend" {
 
-  # triggers = {
-  #   instance_id = module.backend.id
-  # }
+  triggers = {
+    instance_id = module.backend.id
+  }
   
   connection {
     type     = "ssh"
