@@ -22,10 +22,10 @@ resource "null_resource" "backend" {
   }
   
   connection {
-    type = "ssh"
-    user = "ec2-user"
+    type     = "ssh"
+    user     = "ec2-user"
     password = "DevOps321"
-    host = module.backend.private_ip
+    host     = module.backend.private_ip
   }
 
   provisioner "local-exec" {
@@ -33,17 +33,18 @@ resource "null_resource" "backend" {
   }
 
   provisioner "file" {
-    source = "Backend.sh"
-    destination = "/tmp/${var.common_tags.component}.sh"
+    source      = "Backend.sh"
+    destination = "/tmp/backend.sh"
   }
 
   provisioner "remote-exec" {
-        inline = [
-            "chmod +x /tmp/${var.common_tags.component}.sh",
-            "sudo sh /tmp/${var.common_tags.component}.sh ${var.common_tags.component} ${var.environment}"
-        ]
-    } 
+    inline = [
+      "chmod +x /tmp/backend.sh",
+      "sudo sh /tmp/backend.sh ${var.common_tags.component} ${var.environment}"
+    ]
+  } 
 }
+
 
 resource "aws_ec2_instance_state" "backend" {
   instance_id = module.backend.id
