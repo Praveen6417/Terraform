@@ -172,18 +172,18 @@ resource "aws_autoscaling_policy" "cpu_target_tracking" {
   }
 }
 
-# resource "aws_lb_listener_rule" "backend" {
-#   listener_arn = data.aws_ssm_parameter.app-alb-aws_lb_listener.value
-#   priority     = 100 # less number will be first validated
+resource "aws_lb_listener_rule" "backend" {
+  listener_arn = data.aws_ssm_parameter.app-alb-aws_lb_listener.value
+  priority     = 100 # less number will be first validated
 
-#   action {
-#     type             = "forward"
-#     target_group_arn = aws_lb_target_group.backend.arn
-#   }
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.backend.arn
+  }
 
-#   condition {
-#     host_header {
-#       values = [ ]
-#     }
-#   }
-# }
+  condition {
+    host_header {
+      values = [ ]
+    }
+  }
+}
