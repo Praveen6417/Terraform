@@ -182,8 +182,9 @@ resource "aws_lb_listener_rule" "backend" {
   }
 
   condition {
-    host_header {
-      values = [ ]
+    path_pattern {
+      values = ["/backend/*"]
     }
   }
 }
+

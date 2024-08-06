@@ -1,7 +1,7 @@
 resource "aws_lb" "web-alb" {
   name               = "${var.project_name}-${var.environment}-web-alb"
   load_balancer_type = "application"
-  security_groups    = [data.aws_ssm_parameter.private_subnet_ids.value]
+  security_groups    = [data.aws_ssm_parameter.web-alb_sg_id.value]
   subnets            = split(",", data.aws_ssm_parameter.public_subnet_ids.value)
   
   enable_deletion_protection = false
@@ -30,18 +30,18 @@ resource "aws_lb_listener" "http" {
   }
 }
 
-resource "aws_lb_listener" "https" {
-  load_balancer_arn = aws_lb.web-alb.arn
-  port              = "443"
-  protocol          = "HTTPS"
+# resource "aws_lb_listener" "https" {
+#   load_balancer_arn = aws_lb.web-alb.arn
+#   port              = "443"
+#   protocol          = "HTTPS"
 
-  default_action {
-    type = "fixed-response"
+#   default_action {
+#     type = "fixed-response"
 
-    fixed_response {
-      content_type = "text/html"
-      message_body = "<h1> This is fixed response from web-alb https </h1>"
-      status_code  = "200"
-    }
-  }
-}
+#     fixed_response {
+#       content_type = "text/html"
+#       message_body = "<h1> This is fixed response from web-alb https </h1>"
+#       status_code  = "200"
+#     }
+#   }
+# }
