@@ -1,5 +1,6 @@
 module "backend" {
   source  = "terraform-aws-modules/ec2-instance/aws"
+  
   name = "${var.project_name}-${var.environment}-backend"
 
   instance_type          = "t3.micro"
@@ -28,10 +29,6 @@ resource "null_resource" "backend" {
     host     = module.backend.private_ip
   }
 
-  provisioner "local-exec" {
-    command = "echo 'Connection to ${module.backend.private_ip} was successful!'"
-  }
-
   provisioner "file" {
     source      = "Backend.sh"
     destination = "/tmp/backend.sh"
@@ -40,7 +37,7 @@ resource "null_resource" "backend" {
   provisioner "remote-exec" {
     inline = [
       "chmod +x /tmp/backend.sh",
-      "sudo sh /tmp/backend.sh ${var.common_tags.component} ${var.environment}"
+      "sudo sh /tmp/backend.sh backend ${var.environment}"
     ]
   } 
 }
@@ -96,7 +93,7 @@ resource "aws_launch_template" "backend" {
     tags = merge(
       var.common_tags,
       {
-        Name = "${var.project_name}-${var.environment}-${var.common_tags.component}"
+        Name = "${var.project_name}-${var.environment}-backend"
       }
     )
   }
@@ -144,7 +141,7 @@ resource "aws_autoscaling_group" "backend" {
 
   tag {
     key                 = "Name"
-    value               = "${var.project_name}-${var.environment}-${var.common_tags.component}"
+    value               = "${var.project_name}-${var.environment}-backend"
     propagate_at_launch = true
   }
 
