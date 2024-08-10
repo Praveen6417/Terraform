@@ -21,6 +21,7 @@ pipeline {
                 cd terraform-expense/01-vpc
                 echo "Listing contents of 01-vpc:"
                 ls -la
+                terraform init
             """
                 }
             }
