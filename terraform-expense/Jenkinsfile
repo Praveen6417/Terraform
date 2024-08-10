@@ -5,18 +5,16 @@ pipeline {
     options {
         timeout(time: 1, unit: 'HOURS')
         disableConcurrentBuilds()
+        ansiColor('xterm')
     }
-    parameters {
-        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
-        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
-        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
-        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
-        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+     parameters {
+        choice(name: 'action', choices: ['Apply', 'Destroy'], description: 'Select one Choise')
     }
     stages {
-        stage('Build') {
+        stage('Init') {
             steps {
-                sh 'echo Hello World, from Build'
+                sh """cd 01-vpc
+                ls -la"""
             }
         }
         stage('Test') {
