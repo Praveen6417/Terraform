@@ -24,12 +24,22 @@ pipeline {
             """
                 }
             }
-        stage('Test') {
+        stage('Plan') {
+            when{
+                expression{
+                    params.action == "Apply"
+                }
+            }
             steps {
                 sh 'echo Hello World, from Test'
                 }
             }
         stage('Deploy') {
+            when{
+                expression{
+                    params.action == "Destroy"
+                }
+            }
             steps {
                 sh 'echo Hello World, from Deploy'
                 }
