@@ -13,8 +13,15 @@ pipeline {
     stages {
         stage('Init') {
             steps {
-                sh """cd 01-vpc
-                ls -la"""
+                sh """
+                echo "Current Directory: \$(pwd)"
+                echo "Listing contents of the current directory:"
+                ls -la
+                echo "Changing directory to 01-vpc"
+                cd 01-vpc
+                echo "Listing contents of 01-vpc:"
+                ls -la
+            """
                 }
             }
         stage('Test') {
