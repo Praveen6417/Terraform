@@ -8,7 +8,7 @@ pipeline {
         ansiColor('xterm')
     }
      parameters {
-        choice(name: 'action', choices: ['Apply', 'Destroy'], description: 'Select one Choise')
+        choice(name: 'action', choices: ['Apply', 'Destroy'], description: 'Select one from the below')
     }
     stages {
         stage('Init') {
@@ -18,7 +18,7 @@ pipeline {
                 echo "Listing contents of the current directory:"
                 ls -la
                 echo "Changing directory to 01-vpc"
-                cd 01-vpc
+                cd terraform-expense/01-vpc
                 echo "Listing contents of 01-vpc:"
                 ls -la
             """
