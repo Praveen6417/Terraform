@@ -31,11 +31,17 @@ pipeline {
                 }
             }
             input {
-                message "Should we continue?"
+                message "Should we Plan"
                 ok "Yes, we should."
             }
             steps {
-                sh 'ls -la'
+                sh """
+                echo "Changing directory to 01-vpc"
+                cd terraform-expense/01-vpc
+                echo "Listing contents of 01-vpc:"
+                ls -la
+                terraform plan
+            """
                 }
             }
         stage('Apply') {
