@@ -15,28 +15,17 @@ pipeline {
             steps {
                 sh """cd 01-vpc
                 ls -la"""
+                }
             }
-        }
         stage('Test') {
             steps {
                 sh 'echo Hello World, from Test'
+                }
             }
-        }
         stage('Deploy') {
             steps {
                 sh 'echo Hello World, from Deploy'
-            }
-        }
-        stage("print params"){
-            steps{
-                echo "Hello ${params.PERSON}"
-                echo "Biography: ${params.BIOGRAPHY}"
-                echo "Toggle: ${params.TOGGLE}"
-                echo "Choice: ${params.CHOICE}"
-                echo "Password: ${params.PASSWORD}"
-                echo "triggered test again"
-                echo "I am Thor, King of Asgard"
-                echo "I am BlackPanther, King of Wakanda"
+                }
             }
         }
     }
@@ -52,7 +41,6 @@ pipeline {
             echo 'I will run when pipeline is failure'
         }
 
-        }
-    
     }
+    
 
